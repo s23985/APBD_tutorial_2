@@ -1,26 +1,40 @@
-﻿using APBD_tutorial_02.Notification;
+﻿using APBD_tutorial_02.Exception;
+using APBD_tutorial_02.Notification;
 
 namespace APBD_tutorial_02.Model;
 
 public class GasContainer : Container, IHazardNotification
 {
-    public override void LoadCargo(double cargoMass)
+    public double Pressure { get; }
+    
+    public GasContainer(double pressure, double height, double tareWeight, double depth, double maxPayload) 
+        : base(depth: depth, height: height, maxPayload: maxPayload, tareWeight: tareWeight)
     {
-        throw new NotImplementedException();
+        Type = ContainerType.Gas;
+        Pressure = pressure;
+    }
+    
+    public void LoadCargo(double cargoMass)
+    {
+        if (cargoMass > MaxPayload)
+            throw new OverfillException("Cargo mass exceeds container capacity.");
+
+        MassOfCargo = cargoMass;
     }
 
     public override void EmptyCargo()
     {
-        throw new NotImplementedException();
-    }
-
-    public void NotifyHazard(string containerNumber, string message)
-    {
-        throw new NotImplementedException();
+        if (MassOfCargo >= 0.05 * MaxPayload)
+            MassOfCargo = 0.05 * MaxPayload;
     }
     
     protected override string GetTypePrefix()
     {
         return "G";
+    }
+
+    public void NotifyHazard(string message)
+    {
+        Console.WriteLine($"[{SerialNumber}] Hazard: {message}");
     }
 }
