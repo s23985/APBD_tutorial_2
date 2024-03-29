@@ -16,22 +16,21 @@ public class LiquidContainer : Container, IHazardNotification
 
     public void LoadCargo(double cargoMass)
     {
-        if (cargoMass > MaxPayload)
-            throw new OverfillException("Cargo mass exceeds container capacity.");
+        CheckOverfill(cargoMass);
 
-        var storageUsage = Math.Round(cargoMass / MaxPayload * 100, 2);
+        var storageUsage = Math.Round(cargoMass / MaxPayloadKgs * 100, 2);
         
-        if (HazardousCargoStorage && cargoMass > 0.5 * MaxPayload)
+        if (HazardousCargoStorage && cargoMass > 0.5 * MaxPayloadKgs)
             NotifyHazard($"Loading hazardous cargo ({storageUsage}%)");
-        if (cargoMass > 0.9 * MaxPayload)
+        if (cargoMass > 0.9 * MaxPayloadKgs)
             NotifyHazard($"Loading cargo close to its max capacity ({storageUsage}%)");
         
-        MassOfCargo = cargoMass;
+        MassOfCargoKgs = cargoMass;
     }
 
     public override void EmptyCargo()
     {
-        MassOfCargo = 0;
+        MassOfCargoKgs = 0;
     }
 
     public void NotifyHazard(string message)
@@ -42,5 +41,10 @@ public class LiquidContainer : Container, IHazardNotification
     protected override string GetTypePrefix()
     {
         return "L";
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + $", Hazardous cargo - {HazardousCargoStorage}";
     }
 }

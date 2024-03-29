@@ -20,20 +20,24 @@ public class RefrigeratedContainer : Container
         if (cargoLoadInfo.ProductType != ProductType || Temperature < cargoLoadInfo.Temperature)
             throw new InvalidContainerException("Container is not suitable.");
         
-        if (cargoLoadInfo.CargoMass > MaxPayload)
-            throw new OverfillException("Cargo mass exceeds container capacity.");
+        CheckOverfill(cargoLoadInfo.CargoMass);
 
-        MassOfCargo = cargoLoadInfo.CargoMass;
+        MassOfCargoKgs = cargoLoadInfo.CargoMass;
     }
 
     public override void EmptyCargo()
     {
-        MassOfCargo = 0;
+        MassOfCargoKgs = 0;
     }
     
     protected override string GetTypePrefix()
     {
         return "C";
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + $", Product Type - {ProductType}, Required Temperature - {Temperature}°C";;
     }
 }
 

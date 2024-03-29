@@ -14,20 +14,28 @@ public class Program
         liquidCon.EmptyCargo();
         
         gasCon.LoadCargo(100);
-        Console.WriteLine(gasCon.MassOfCargo);
+        Console.WriteLine(gasCon.MassOfCargoKgs);
 
         gasCon.EmptyCargo();
-        Console.WriteLine(gasCon.MassOfCargo);
+        Console.WriteLine(gasCon.MassOfCargoKgs);
 
         var loadInfo = new RefrigeratedCargoLoadInfo()
         {
-            Temperature = 13.4,
+            Temperature = 13.3,
             CargoMass = 234,
             ProductType = "Banana"
         };
         
         refiCon.LoadCargo(loadInfo);
 
-        Console.WriteLine($"liquidCon: {liquidCon.SerialNumber}, gasCon: {gasCon.SerialNumber}, refiCon: {refiCon.SerialNumber}");
+        var containerShip = new ContainerShip(125, 3, 2);
+
+        var containers = new List<Container>
+        {
+            refiCon, liquidCon, gasCon
+        };
+
+        containerShip.LoadContainers(containers);
+        containerShip.PrintShipInfo();
     }
 }
