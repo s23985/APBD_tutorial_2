@@ -11,8 +11,6 @@ public class Program
         
         liquidCon.LoadCargo(154);
         
-        liquidCon.EmptyCargo();
-        
         gasCon.LoadCargo(100);
         Console.WriteLine(gasCon.MassOfCargoKgs);
 
@@ -28,14 +26,20 @@ public class Program
         
         refiCon.LoadCargo(loadInfo);
 
-        var containerShip = new ContainerShip(125, 3, 2);
+        var shipA = new ContainerShip(125, 3, 2);
 
         var containers = new List<Container>
         {
             refiCon, liquidCon, gasCon
         };
 
-        containerShip.LoadContainers(containers);
-        containerShip.PrintShipInfo();
+        shipA.LoadContainers(containers);
+
+        var shipB = new ContainerShip(222, 5, 4);
+        
+        shipA.TransferContainer(liquidCon.SerialNumber, shipB);
+        
+        shipA.PrintShipInfo();
+        shipB.PrintShipInfo();
     }
 }

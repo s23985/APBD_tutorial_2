@@ -57,6 +57,14 @@ public class ContainerShip
         RemoveContainer(serialNumber);
         LoadContainer(newContainer);
     }
+
+    public void TransferContainer(string serialNumber, ContainerShip targetShip)
+    {
+        var container = UnloadContainer(serialNumber);
+        
+        if (container != null)
+            targetShip.LoadContainer(container);
+    }
     
     public void PrintShipInfo()
     {
