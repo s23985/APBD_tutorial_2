@@ -2,7 +2,7 @@
 
 public class ContainerShip
 {
-    public List<Container> Containers { get; private set; } = [];
+    public List<Container> Containers { get; } = [];
     public int MaxSpeedKnots { get; }
     public int MaxContainers { get; }
     public double MaxWeightTons { get; }

@@ -7,13 +7,13 @@ public abstract class Container
     private static int _containerCounter = 1;
     
     public ContainerType Type { get; protected set; }
-    public string SerialNumber { get; protected set; }
+    public string SerialNumber { get; }
     
     public double MassOfCargoKgs { get; protected set; }
-    public double HeightCms { get; protected set; }
-    public double TareWeightKgs { get; protected set; }
-    public double DepthCms { get; protected set; }
-    public double MaxPayloadKgs { get; protected set; }
+    public double HeightCms { get; }
+    public double TareWeightKgs { get; }
+    public double DepthCms { get; }
+    public double MaxPayloadKgs { get; }
 
     public Container(double height, double tareWeight, double depth, double maxPayload)
     {
